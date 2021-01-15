@@ -1,0 +1,17 @@
+FROM node:lts-alpine AS build
+WORKDIR /app
+
+# Install dependencies and cache the result.
+COPY package.json .
+COPY yarn.lock .
+RUN [ "yarn" ]
+
+# Copy other top level files.
+# Add a line for every file used for builds.
+COPY tsconfig.json .
+COPY next-env.d.ts .
+COPY tailwind.config.js .
+COPY postcss.config.js .
+
+EXPOSE 3000
+ENTRYPOINT [ "yarn", "dev" ]
