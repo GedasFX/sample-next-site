@@ -4,14 +4,14 @@ WORKDIR /app
 # Install dependencies and cache the result.
 COPY package.json .
 COPY yarn.lock .
-RUN [ "yarn" ]
+RUN [ "yarn", "install" ]
 
 # Copy other top level files.
 # Add a line for every file used for builds.
+COPY .eslintrc .
 COPY tsconfig.json .
-COPY next-env.d.ts .
-COPY tailwind.config.js .
 COPY postcss.config.js .
+COPY tailwind.config.js .
 
 EXPOSE 3000
 ENTRYPOINT [ "yarn", "dev" ]

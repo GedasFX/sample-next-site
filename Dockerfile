@@ -2,20 +2,21 @@ FROM node:lts-alpine AS node_modules
 WORKDIR /build
 
 # Install ONLY the packages needed for SSR.
-# For example, if using mysql2 on the server side, add it here.
-RUN [ "yarn", "add", "next@10.0.5", "react@17.0.1", "react-dom@17.0.1" ]
+COPY package.json .
+COPY yarn.lock .
+RUN [ "yarn", "install", "--prod" ]
 
 
 FROM node:lts-alpine AS build
 WORKDIR /build
 
+# Install all of the packages needed for the build.
 COPY package.json .
 COPY yarn.lock .
 
-# Copy the node_modules needed from production to speed up the installation 
-# and then install the rest of the dependencies needed for the build.
+# Copy the node_modules needed for production to speed up the installation.
 COPY --from=node_modules /build/node_modules ./node_modules
-RUN [ "yarn" ]
+RUN [ "yarn", "install" ]
 
 # Copy the source files and build the program.
 COPY . .
