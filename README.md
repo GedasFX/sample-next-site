@@ -41,7 +41,7 @@ If you do not care about docker image size or will not use it all, you can ignor
 
 Normal `npx create-next-app` generates `dev`, `build`, and `start` scripts. In addition to those, I added [`dev:debug`](https://nextjs.org/docs/advanced-features/debugging), [`build:analyze`](https://www.npmjs.com/package/@next/bundle-analyzer), [`export`](https://nextjs.org/docs/advanced-features/static-html-export), [`type-check`](https://www.typescriptlang.org/docs/handbook/compiler-options.html), [`lint`](https://eslint.org/docs/user-guide/command-line-interface), and [`format`](https://prettier.io/docs/en/cli.html). You can click on any of these links to inspect what they do. I found that I use those commands often, and found them useful to add to a fresh project.
 
-## Docker
+## Docker Support
 
 This starter ships with 2 docker files: [`Dockerfile`](Dockerfile) used for production builds, and [`Dockerfile.dev`](Dockerfile.dev), coupled with [`docker-compose.yml`](docker-compose.yml), used for dev environments. 
 
@@ -123,4 +123,8 @@ COPY tailwind.config.js .
 ```
 
 Ignoring that small caveat, file watching and hot reloading works as intended for all files under `/public/` and `/src/` directories. A change to any other file, would require a change in configuration or a rebuild.
+
+## PWA Support
+
+This starter comes with basic PWA support. The default `<meta>` tags are described in [`_app.tsx`](src/pages/_app.tsx) file. The service worker itself is managed by [`next-pwa`](https://www.npmjs.com/package/next-pwa) plugin, and it is possible to change the runtime caching rules on the [`next.config.js`](next.config.js) file. 	
 
