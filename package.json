@@ -10,8 +10,8 @@
     "start": "next start",
     "export": "next export",
     "type-check": "tsc --pretty --noEmit",
-    "lint": "eslint --ignore-path .gitignore --max-warnings 0 \"src/**/*.+(js|ts|tsx)\"",
-    "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write"
+    "lint": "eslint \"src/**/*.+(js|jsx|ts|tsx)\" --max-warnings 0",
+    "format": "prettier \"src/**/*.+(js|jsx|ts|tsx)\" --write"
   },
   "dependencies": {
     "next": "10.0.5",

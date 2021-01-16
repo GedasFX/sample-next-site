@@ -5,7 +5,13 @@
     "es2021": true,
     "node": true
   },
-  "ignorePatterns": ["node_modules/*", ".next/*", ".out/*"],
+  "ignorePatterns": [
+    "node_modules/*",
+    "public/*",
+    "out/*",
+    ".next/*",
+    "next.config.js"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
