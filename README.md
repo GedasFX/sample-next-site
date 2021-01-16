@@ -1,34 +1,126 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js starter by GedasFX
 
-## Getting Started
+This starter extends `npx create-next-app` and consists only of the packages, I would want to see across all of my projects. For more advanced and narrowed down use cases check out other branches.
 
-First, run the development server:
+Further below I will provide what was changed from regular `npx create-next-app`.
 
-```bash
-npm run dev
-# or
-yarn dev
+## TypeScript
+
+By far most important change is the fact that TypeScript is enabled from the start. To accommodate this change, [`tsconfig.json`](tsconfig.json) was added, alongside the generated [`next-env.d.ts`](next-env.d.ts). 
+
+This required [`@types/node`](https://www.npmjs.com/package/@types/node),  [`@types/react`](https://www.npmjs.com/package/@types/react),  and [`typescript`](https://www.npmjs.com/package/typescript) packages to be added to `devDependencies`.
+
+## Linting and code formatting
+
+For enforcing code quality, 3 tools were used. [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), and [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker), as seen in the [`.vscode`](.vscode) folder. 
+
+### ESLint
+
+A preconfigured [`.eslintrc`](.eslintrc) file was added in the root directory. Feel free to customize rules or any other part however you like.
+
+This required [`@typescript-eslint/eslint-plugin`](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin), [`@typescript-eslint/parser`](https://www.npmjs.com/package/@typescript-eslint/parser), [`eslint`](https://www.npmjs.com/package/eslint), [`eslint-plugin-jsx-a11y`](https://www.npmjs.com/package/eslint-plugin-jsx-a11y), [`eslint-plugin-react`](https://www.npmjs.com/package/eslint-plugin-react), and [`eslint-plugin-react-hooks`](https://www.npmjs.com/package/eslint-plugin-react-hooks) packages to be added to `devDependencies`.
+
+### Prettier
+
+The code formatter of choice for this starter is Prettier. Feel free to customize [`.prettierrc`](.prettierrc), and [`.prettierignore`](.pterrierignore) files to your likely.
+
+This required [`prettier`](https://www.npmjs.com/package/prettier) package to be added to `devDependencies`.
+
+## package.json
+
+### Dependencies
+
+One of most important goals of making the starter is reducing Docker image size as much as possible. This is why pretty much all of the packages are placed in `devDependencies` section. These packages are only pulled for building of static files (`next build`), and will not be bundled in the final image.
+
+The only packages to be placed in `dependencies` are the ones needed for SSR itself. By default there are only 3: `next`, `react`, and `react-dom`. 
+
+If you do not care about docker image size or will not use it all, you can ignore this rule.
+
+
+### Scripts
+
+Normal `npx create-next-app` generates `dev`, `build`, and `start` scripts. In addition to those, I added [`dev:debug`](https://nextjs.org/docs/advanced-features/debugging), [`build:analyze`](https://www.npmjs.com/package/@next/bundle-analyzer), [`export`](https://nextjs.org/docs/advanced-features/static-html-export), [`type-check`](https://www.typescriptlang.org/docs/handbook/compiler-options.html), [`lint`](https://eslint.org/docs/user-guide/command-line-interface), and [`format`](https://prettier.io/docs/en/cli.html). You can click on any of these links to inspect what they do. I found that I use those commands often, and found them useful to add to a fresh project.
+
+## Docker
+
+This starter ships with 2 docker files: [`Dockerfile`](Dockerfile) used for production builds, and [`Dockerfile.dev`](Dockerfile.dev), coupled with [`docker-compose.yml`](docker-compose.yml), used for dev environments. 
+
+### Production
+
+A lot of effort was put in to optimize build times and the final image size. That is why we ended up with such a weird [`Dockerfile`](Dockerfile), however I can assure you every part of this [multi-stage Dockerfile](https://docs.docker.com/develop/develop-images/multistage-build/) makes sense.
+
+**Step 1:** Installing (and caching) production `node_modules`.
+
+```dockerfile
+FROM node:lts-alpine AS node_modules
+WORKDIR /build
+
+# Install ONLY the packages needed for SSR.
+COPY package.json .
+COPY yarn.lock .
+RUN [ "yarn", "install", "--prod" ]
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Step 2:** Building the application and rendering static pages.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```dockerfile
+FROM node:lts-alpine AS build
+WORKDIR /build
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+# Install all of the packages needed for the build.
+COPY package.json .
+COPY yarn.lock .
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+# Copy the node_modules needed for production to speed up the installation.
+COPY --from=node_modules /build/node_modules ./node_modules
+RUN [ "yarn", "install" ]
 
-## Learn More
+# Copy the source files and build the program.
+COPY . .
+RUN [ "yarn", "build" ]
+```
 
-To learn more about Next.js, take a look at the following resources:
+To speed up the installation `node_modules` we copy production-only packages to our new node_modules folder and then letting `yarn` to deal with fetching the rest of the packages from `devDependencies`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Step 3:** Preparing a space-conscious production image.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```dockerfile
+FROM node:lts-alpine AS prod
+WORKDIR /app
 
-## Deploy on Vercel
+# Enable production optimizations
+ENV NODE_ENV=production
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Copy the files required for rendering.
+COPY package.json .
+COPY --from=build /build/.next ./.next
+COPY --from=build /build/public ./public
+COPY --from=node_modules /build/node_modules ./node_modules
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+EXPOSE 3000
+ENTRYPOINT [ "yarn", "start" ]
+```
+
+Alternatively, if the site is entirely static, on step 2 `yarn export` could be used at the end and only the static files be copied to an `nginx` (or equivalent) image's public directory.
+
+### Development
+
+Recently I have started making all of my projects be able to easily developed with having only Docker installed on the device. This is less useful on front-end projects but is a godsent on back-end projects, where the need to set up a database is removed completely.
+
+To start development with Docker, run `docker-compose up --build`. This automatically builds the project using [`Dockerfile.dev`](Dockerfile.dev).
+
+**NB!** for a lack of a better solution, that does not cause more harm then solves problems, top level files are not copied over. They need to be either manually added in `Dockerfile.dev`, or be mounted on `docker-compose.yml`:
+
+```dockerfile
+# Copy other top level files.
+# Add a line for every file needed for development process.
+COPY .eslintrc .
+COPY tsconfig.json .
+COPY next.config.js .
+
+COPY postcss.config.js .
+COPY tailwind.config.js .
+```
+
+Ignoring that small caveat, file watching and hot reloading works as intended for all files under `/public/` and `/src/` directories. A change to any other file, would require a change in configuration or a rebuild.
+

@@ -2,11 +2,16 @@
   "name": "nextjs-starter",
   "version": "0.1.0",
   "license": "MIT",
+  "author": {
+    "name": "Gediminas Milašius",
+    "email": "gediminasmilasius@gmail.com",
+    "url": "http://gedasfx.github.io/"
+  },
   "scripts": {
     "dev": "next dev",
-    "debug": "cross-env NODE_OPTIONS='--inspect' next dev",
+    "dev:debug": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
-    "analyze": "cross-env ANALYZE=true next build",
+    "build:analyze": "cross-env ANALYZE=true next build",
     "start": "next start",
     "export": "next export",
     "type-check": "tsc --pretty --noEmit",
