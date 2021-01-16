@@ -117,9 +117,6 @@ To start development with Docker, run `docker-compose up --build`. This automati
 COPY .eslintrc .
 COPY tsconfig.json .
 COPY next.config.js .
-
-COPY postcss.config.js .
-COPY tailwind.config.js .
 ```
 
 Ignoring that small caveat, file watching and hot reloading works as intended for all files under `/public/` and `/src/` directories. A change to any other file, would require a change in configuration or a rebuild.

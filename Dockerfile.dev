@@ -12,8 +12,5 @@ COPY .eslintrc .
 COPY tsconfig.json .
 COPY next.config.js .
 
-COPY postcss.config.js .
-COPY tailwind.config.js .
-
 EXPOSE 3000
 ENTRYPOINT [ "yarn", "dev" ]
