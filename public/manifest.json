@@ -1,6 +1,6 @@
 {
-  "name": "next-pwa",
-  "short_name": "next-pwa",
+  "name": "Next.JS Starter",
+  "short_name": "Next.JS Starter",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#FFFFFF",

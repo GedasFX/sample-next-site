@@ -4,7 +4,7 @@ import Head from 'next/head';
 import 'src/styles/globals.css';
 
 const APP_NAME = 'Next.JS Starter';
-const APP_DESCRIPTION = 'Next.JS Starter created by GedasFX';
+const APP_DESCRIPTION = 'Next.JS Starter';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
