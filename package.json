@@ -7,6 +7,10 @@
     "email": "gediminasmilasius@gmail.com",
     "url": "http://gedasfx.github.io/"
   },
+  "main": "firebase-server.js",
+  "engines": {
+    "node": "14"
+  },
   "scripts": {
     "dev": "next dev",
     "dev:debug": "cross-env NODE_OPTIONS='--inspect' next dev",
@@ -16,12 +20,14 @@
     "export": "next export",
     "type-check": "tsc --pretty --noEmit",
     "lint": "eslint \"src/**/*.+(js|jsx|ts|tsx)\" --max-warnings 0",
-    "format": "prettier \"src/**/*.+(js|jsx|ts|tsx)\" --write"
+    "format": "prettier \"src/**/*.+(js|jsx|ts|tsx)\" --write",
+    "deploy": "next build && cross-env NODE_ENV=production firebase deploy --only functions,hosting"
   },
   "dependencies": {
     "next": "10.0.5",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "firebase-functions": "^3.13.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^10.0.5",
@@ -36,6 +42,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "firebase-admin": "^9.4.2",
     "gray-matter": "^4.0.2",
     "next-compose-plugins": "^2.2.1",
     "next-pwa": "^5.0.3",

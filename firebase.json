@@ -1,0 +1,28 @@
+{
+  "emulators": {
+    "hosting": {},
+    "functions": {}
+  },
+  "hosting": {
+    "public": "public/",
+    "ignore": [
+      "firebase.json",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "nextServer"
+      }
+    ]
+  },
+  "functions": {
+    "source": "./",
+    "ignore": [
+      "firebase.json",
+      "**/node_modules/**",
+      "src/**",
+      "public/**"
+    ]
+  }
+}
