@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
+import 'tailwindcss/tailwind.css';
 import 'src/styles/globals.css';
 
 const APP_NAME = 'Next.JS Starter';
