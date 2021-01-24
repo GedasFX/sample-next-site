@@ -4,7 +4,7 @@ import Date from 'src/components/Date';
 import utilStyles from '../styles/utils.module.css';
 import { getSortedPostsData } from '../lib/posts';
 import Link from 'next/link';
-import { GetStaticProps } from 'next';
+import type { GetStaticProps } from 'next';
 
 type Props = {
   allPostsData: { title: string; date: string; id: string }[];

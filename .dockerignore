@@ -1,6 +1,3 @@
-# Environment files
-.env*
-
 # Build folders
 .git
 .next

@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
@@ -25,7 +24,7 @@ export default function Layout({ children, home }: { children: React.ReactNode; 
       <header className={styles.header}>
         {home ? (
           <>
-            <Image
+            <img
               src="/images/profile.jpg"
               height={128}
               width={128}
@@ -37,7 +36,7 @@ export default function Layout({ children, home }: { children: React.ReactNode; 
         ) : (
           <>
             <Link href="/">
-              <Image
+              <img
                 src="/images/profile.jpg"
                 height={96}
                 width={96}
