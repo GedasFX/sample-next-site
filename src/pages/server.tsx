@@ -1,16 +1,11 @@
 import { GetServerSideProps } from 'next';
-import Layout from 'src/layout';
 
 type Props = {
   message: string;
 };
 
 export default function ServerPage(props: Props) {
-  return (
-    <Layout>
-      <span>Message from server side: {props.message}</span>
-    </Layout>
-  );
+  return <span>Message from server side: {props.message}</span>;
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {

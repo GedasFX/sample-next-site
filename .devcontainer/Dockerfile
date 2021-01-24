@@ -2,6 +2,10 @@
 ARG VARIANT=12
 FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-${VARIANT}
 
+ARG NODE_MODULES="firebase-tools"
+RUN su node -c "umask 0002 && npm install -g ${NODE_MODULES}" \
+    && npm cache clean --force > /dev/null 2>&1
+
 # Update args in docker-compose.yaml to set the UID/GID of the "node" user.
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
