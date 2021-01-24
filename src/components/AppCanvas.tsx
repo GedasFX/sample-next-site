@@ -1,15 +1,21 @@
+import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import { Canvas } from 'react-three-fiber';
-import AppScene from './three/scenes/AppScene';
 
-export default function AppCanvas(): JSX.Element {
+type Props = {
+  sceneId: string;
+};
+
+export default function AppCanvas({ sceneId }: Props): JSX.Element {
+  const Scene = dynamic(() => import(`src/three/scenes/${sceneId}`));
+
   return (
     <>
       <div className="container">
         <div className="canvas">
           <Canvas>
             <Suspense fallback={null}>
-              <AppScene />
+              <Scene />
             </Suspense>
           </Canvas>
         </div>
