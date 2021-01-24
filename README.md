@@ -43,7 +43,7 @@ Normal `npx create-next-app` generates `dev`, `build`, and `start` scripts. In a
 
 ## Docker Support
 
-This starter ships with 2 docker files: [`Dockerfile`](Dockerfile) used for production builds, and [`Dockerfile.dev`](Dockerfile.dev), coupled with [`docker-compose.yml`](docker-compose.yml), used for dev environments. 
+This starter ships with a [`Dockerfile`](Dockerfile) used for production builds. For development refer to [Remote - Containers support](#remote-containers-support)
 
 ### Production
 
@@ -103,23 +103,9 @@ ENTRYPOINT [ "yarn", "start" ]
 
 Alternatively, if the site is entirely static, on step 2 `yarn export` could be used at the end and only the static files be copied to an `nginx` (or equivalent) image's public directory.
 
-### Development
+### Remote Containers Support
 
-Recently I have started making all of my projects be able to easily developed with having only Docker installed on the device. This is less useful on front-end projects but is a godsent on back-end projects, where the need to set up a database is removed completely.
-
-To start development with Docker, run `docker-compose up --build`. This automatically builds the project using [`Dockerfile.dev`](Dockerfile.dev).
-
-**NB!** for a lack of a better solution, that does not cause more harm then solves problems, top level files are not copied over. They need to be either manually added in `Dockerfile.dev`, or be mounted on `docker-compose.yml`:
-
-```dockerfile
-# Copy other top level files.
-# Add a line for every file needed for development process.
-COPY .eslintrc .
-COPY tsconfig.json .
-COPY next.config.js .
-```
-
-Ignoring that small caveat, file watching and hot reloading works as intended for all files under `/public/` and `/src/` directories. A change to any other file, would require a change in configuration or a rebuild.
+For development purposes, you could make use of VSCode's [Remote - Containers](https://code.visualstudio.com/docs/remote/containers) plugin to set up dependencies in a docker container. All you need to do is launch the folder in container as seen in the docs.
 
 ## PWA Support
 
