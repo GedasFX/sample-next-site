@@ -7,6 +7,10 @@
     "email": "gediminasmilasius@gmail.com",
     "url": "http://gedasfx.github.io/"
   },
+  "main": "firebase-server.js",
+  "engines": {
+    "node": "14"
+  },
   "scripts": {
     "dev": "next dev",
     "dev:debug": "NODE_OPTIONS='--inspect' next dev",
@@ -17,12 +21,14 @@
     "type-check": "tsc --pretty --noEmit",
     "lint": "eslint \"src/**/*.+(js|jsx|ts|tsx)\"",
     "lint:prod": "yarn run lint --max-warnings 0",
-    "format": "prettier \"src/**/*.+(js|jsx|ts|tsx)\" --write"
+    "format": "prettier \"src/**/*.+(js|jsx|ts|tsx)\" --write",
+    "deploy": "next build && cross-env NODE_ENV=production firebase deploy --only functions,hosting"
   },
   "dependencies": {
     "next": "10.0.5",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "firebase-functions": "^3.13.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^10.0.5",

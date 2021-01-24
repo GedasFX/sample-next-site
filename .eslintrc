@@ -10,7 +10,8 @@
     "public/*",
     "out/*",
     ".next/*",
-    "next.config.js"
+    "next.config.js",
+    "firebase-server.js"
   ],
   "extends": [
     "eslint:recommended",
