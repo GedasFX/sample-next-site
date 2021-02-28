@@ -2,7 +2,12 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
 import 'tailwindcss/tailwind.css';
-import 'src/styles/globals.css';
+
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+import 'src/styles/global.css';
+
 import Layout from 'src/layout';
 
 const APP_NAME = 'Next.JS Starter';

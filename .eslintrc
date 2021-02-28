@@ -35,6 +35,7 @@
 
     // No need to import React when using Next.js
     "react/react-in-jsx-scope": "off",
+    "jsx-a11y/anchor-is-valid": "off",
 
     // Allow implicit return types.
     "@typescript-eslint/explicit-module-boundary-types": "off"

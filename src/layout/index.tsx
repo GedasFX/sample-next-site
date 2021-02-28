@@ -1,11 +1,13 @@
 import { PropsWithChildren } from 'react';
-import Navbar from './Navbar';
+import Footer from './Footer';
+import Header from './Header';
 
 export default function Layout({ children }: PropsWithChildren<unknown>) {
   return (
-    <>
-      <Navbar />
+    <div className="text-gray-600 body-font">
+      <Header />
       <div>{children}</div>
-    </>
+      <Footer />
+    </div>
   );
 }
