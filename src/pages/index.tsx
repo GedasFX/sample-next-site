@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import Carousel from 'src/components/home/Carousel';
+import Carousel from 'src/components/common/Carousel';
 import Testimonials from 'src/components/home/Tesimonials';
 import AboutUs from 'src/components/home/AboutUs';
 import Hero from 'src/components/home/Hero';
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <Carousel className="h-screen">
