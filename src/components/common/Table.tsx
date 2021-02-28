@@ -67,7 +67,7 @@ export default function Table({ columns, data }: HistoryTableProps) {
 
             return (
               // eslint-disable-next-line react/jsx-key
-              <tr className="border-b border-gray-200" {...r.getRowProps()}>
+              <tr className="border-b border-gray-200 hover:bg-gray-50" {...r.getRowProps()}>
                 {r.cells.map(c => (
                   // eslint-disable-next-line react/jsx-key
                   <td className="px-5 py-1" {...c.getCellProps()}>

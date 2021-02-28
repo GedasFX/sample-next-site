@@ -30,7 +30,12 @@ export default function HistoryTable({ data }: HistoryTableProps) {
 
         Cell: function Cell({ row }: { row: Row<DataRow> }) {
           return (
-            <a href={row.original.store.url} target="_blank" rel="noopener noreferrer">
+            <a
+              className="hover:underline"
+              href={row.original.store.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {row.original.store.name}
             </a>
           );
