@@ -16,7 +16,11 @@ export type HistoryPageProps = {
 };
 
 export default function HistoryPage({ history }: HistoryPageProps) {
-  return <HistoryTable data={history} />;
+  return (
+    <div className="pt-5">
+      <HistoryTable data={history} />
+    </div>
+  );
 }
 
 export const getStaticProps: GetStaticProps<HistoryPageProps> = async () => {
