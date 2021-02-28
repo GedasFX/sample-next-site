@@ -1,5 +1,21 @@
-import { useMemo } from 'react';
-import { Column, Row, useTable } from 'react-table';
+// react-table typescript support is incredibly lacking. TODO: investigate alternatives.
+// eslint-disable-next-line
+// @ts-nocheck
+
+import { useMemo, useState } from 'react';
+import { Column, FilterProps, Row, useFilters, useGlobalFilter, useTable } from 'react-table';
+
+function DefaultColumnFilter({ column: { filterValue, setFilter } }: FilterProps<DataRow>) {
+  return (
+    <input
+      value={filterValue || ''}
+      onChange={e => {
+        setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+      }}
+      placeholder="Search records..."
+    />
+  );
+}
 
 type DataRow = {
   product: {
@@ -17,49 +33,70 @@ export type HistoryTableProps = {
 };
 
 export default function HistoryTable({ data }: HistoryTableProps) {
-  const columns: Column<DataRow>[] = useMemo(
-    () => [
-      {
-        Header: 'Product',
-        accessor: 'product.name' as 'product',
-      },
-      {
-        Header: 'Store',
-        accessor: 'store.name' as 'store',
+  //   const columns: Column<DataRow>[] = useMemo(
+  //     () => [
+  //       {
+  //         Header: 'Product',
+  //         accessor: 'product.name' as 'product',
+  //       },
+  //       {
+  //         Header: 'Store',
+  //         accessor: 'store.name' as 'store',
 
-        // eslint-disable-next-line react/display-name
-        Cell: ({ row }: { row: Row<DataRow> }) => (
-          <a href={row.original.store.url} target="_blank" rel="noopener noreferrer">
-            {row.original.store.name}
-          </a>
-        ),
-      },
-      {
-        Header: 'Date',
-        accessor: 'date_created',
+  //         Cell: function Cell({ row }: { row: Row<DataRow> }) {
+  //           return (
+  //             <a href={row.original.store.url} target="_blank" rel="noopener noreferrer">
+  //               {row.original.store.name}
+  //             </a>
+  //           );
+  //         },
+  //       },
+  //       {
+  //         Header: 'Date',
+  //         accessor: 'date_created',
 
-        // eslint-disable-next-line react/display-name
-        Cell: ({ value }) =>
-          new Date(value).toLocaleString(undefined, {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'long',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
+  //         Cell: function Cell({ value }) {
+  //           return new Date(value).toLocaleString(undefined, {
+  //             weekday: 'short',
+  //             year: 'numeric',
+  //             month: 'long',
+  //             day: '2-digit',
+  //             hour: '2-digit',
+  //             minute: '2-digit',
 
-            hour12: false,
-            timeZoneName: 'short',
-          }),
-      },
-    ],
+  //             hour12: false,
+  //             timeZoneName: 'short',
+  //           });
+  //         },
+  //       },
+  //     ],
+  //     []
+  //   );
+
+  const defaultColumn = useMemo(
+    () => ({
+      Filter: DefaultColumnFilter,
+    }),
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
-    columns,
-    data,
-  });
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    state,
+    prepareRow,
+    setGlobalFilter,
+  } = useTable(
+    {
+      columns,
+      data: [data[0]],
+      defaultColumn,
+    },
+    useFilters,
+    useGlobalFilter
+  );
 
   return (
     <table {...getTableProps()}>
@@ -69,10 +106,16 @@ export default function HistoryTable({ data }: HistoryTableProps) {
           <tr {...g.getHeaderGroupProps()}>
             {g.headers.map(c => (
               // eslint-disable-next-line react/jsx-key
-              <th {...c.getHeaderProps()}>{c.render('Header')}</th>
+              <th {...c.getHeaderProps()}>
+                {c.render('Header')}
+                {c.canFilter && c.render('Filter')}
+              </th>
             ))}
           </tr>
         ))}
+        <tr>
+          <GlobalFilter globalFilter={state.globalFilter} setGlobalFilter={setGlobalFilter} />
+        </tr>
       </thead>
       <tbody {...getTableBodyProps()}>
         {rows.map(r => {
