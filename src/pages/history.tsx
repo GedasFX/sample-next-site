@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next';
 import * as fs from 'fs';
+import HistoryTable from 'src/components/history/HistoryTable';
 
 export type HistoryPageProps = {
   history: {
@@ -15,7 +16,7 @@ export type HistoryPageProps = {
 };
 
 export default function HistoryPage({ history }: HistoryPageProps) {
-  return 'Hello';
+  return <HistoryTable data={history} />;
 }
 
 export const getStaticProps: GetStaticProps<HistoryPageProps> = async () => {

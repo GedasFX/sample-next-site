@@ -1153,6 +1153,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-table@^7.0.28":
+  version "7.0.28"
+  resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-7.0.28.tgz#763383c3e7a285892ee64f311ee97a9c254b2bb0"
+  integrity sha512-crPm70S2KYGj3HJ2zCoeT0t8tdIvKDKCClMd1up3Gi/EDiTZraj3JFUsEL3+oXGSyv+n0EGGAf9a+0XsmdGpXA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^17.0.2":
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.2.tgz#3de24c4efef902dd9795a49c75f760cbe4f7a5a8"
@@ -5322,6 +5329,11 @@ react-slick@^0.28.0:
     json2mq "^0.2.0"
     lodash.debounce "^4.0.8"
     resize-observer-polyfill "^1.5.0"
+
+react-table@^7.6.3:
+  version "7.6.3"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.6.3.tgz#76434392b3f62344bdb704f5b227c2f29c1ffb14"
+  integrity sha512-hfPF13zDLxPMpLKzIKCE8RZud9T/XrRTsaCIf8zXpWZIZ2juCl7qrGpo3AQw9eAetXV5DP7s2GDm+hht7qq5Dw==
 
 react@17.0.1:
   version "17.0.1"
