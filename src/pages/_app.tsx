@@ -3,6 +3,7 @@ import Head from 'next/head';
 
 import 'tailwindcss/tailwind.css';
 import 'src/styles/globals.css';
+import Layout from 'src/layout';
 
 const APP_NAME = 'Next.JS Starter';
 const APP_DESCRIPTION = 'Next.JS Starter';
@@ -28,7 +29,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="shortcut icon" href="/icons/favicon.ico" />
       </Head>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }
