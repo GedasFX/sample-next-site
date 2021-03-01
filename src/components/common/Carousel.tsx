@@ -18,9 +18,9 @@ const defaultSettings: Settings = {
 
 export type CarouselProps = React.PropsWithChildren<unknown> & Settings;
 
-export default function Carousel({ children, ...settings }: CarouselProps) {
+export default function Carousel({ children, className, ...settings }: CarouselProps) {
   return (
-    <Slider {...defaultSettings} {...settings}>
+    <Slider className={`h-full ${className}`} {...defaultSettings} {...settings}>
       {children}
     </Slider>
   );

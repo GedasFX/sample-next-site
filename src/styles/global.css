@@ -1,1 +1,11 @@
 @import '_react-slick.css';
+
+:root {
+  --header-height: 5rem;
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    --header-height: 4rem;
+  }
+}

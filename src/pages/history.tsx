@@ -17,7 +17,7 @@ export type HistoryPageProps = {
 
 export default function HistoryPage({ history }: HistoryPageProps) {
   return (
-    <div className="pt-5">
+    <div className="container mx-auto pt-5">
       <HistoryTable data={history} />
     </div>
   );
