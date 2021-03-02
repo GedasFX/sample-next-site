@@ -1,6 +1,9 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
+import { Provider } from 'react-redux';
+import useStore from 'src/store';
+
 import 'tailwindcss/tailwind.css';
 
 import 'slick-carousel/slick/slick.css';
@@ -14,8 +17,10 @@ const APP_NAME = 'Next.JS Starter';
 const APP_DESCRIPTION = 'Next.JS Starter';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const store = useStore(pageProps.initialReduxState);
+
   return (
-    <>
+    <Provider store={store}>
       <Head>
         <meta name="application-name" content={APP_NAME} />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,9 +39,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="shortcut icon" href="/icons/favicon.ico" />
       </Head>
+
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </>
+    </Provider>
   );
 }

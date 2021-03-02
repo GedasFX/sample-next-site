@@ -2,33 +2,24 @@ import { useMemo } from 'react';
 import { Column, Row } from 'react-table';
 import Table from '../common/Table';
 
-type DataRow = {
-  product: {
-    name: string;
-  };
-  store: {
-    name: string;
-    url: string;
-  };
-  date_created: string;
-};
-
 export type HistoryTableProps = {
-  data: DataRow[];
+  data: Dto.Product[];
 };
 
 export default function HistoryTable({ data }: HistoryTableProps) {
-  const columns: Column<DataRow>[] = useMemo(
+  const columns: Column<Dto.Product>[] = useMemo(
     () => [
       {
         Header: 'Product',
-        accessor: 'product.name' as 'product',
+        id: 'product.name',
+        accessor: c => c.product.name,
       },
       {
         Header: 'Store',
-        accessor: 'store.name' as 'store',
+        id: 'store.name',
+        accessor: c => c.store.name,
 
-        Cell: function Cell({ row }: { row: Row<DataRow> }) {
+        Cell: function Cell({ row }: { row: Row<Dto.Product> }) {
           return (
             <a
               className="hover:underline"
