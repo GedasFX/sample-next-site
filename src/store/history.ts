@@ -36,7 +36,7 @@ const slice = createSlice({
         state.error = undefined;
       })
       .addCase(thunkActions.fetchAll.fulfilled, (state, { payload }) => {
-        adapter.setAll(state, payload);
+        adapter.upsertMany(state, payload); // With actual backend interaction would be setAll, as the data in backend would always be more true.
 
         state.status = 'idle';
         state.lastSyncTimestamp = Date.now();
