@@ -2,18 +2,20 @@ import { configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { useMemo } from 'react';
 import { Action, combineReducers } from 'redux';
 
+import cart from './cart';
 import history from './history';
 
 let store: ReturnType<typeof createStore> | undefined;
 
-export const rootReducer = combineReducers({
+export const reducer = combineReducers({
+  cart,
   history,
 });
-export type AppState = ReturnType<typeof rootReducer>;
+export type AppState = ReturnType<typeof reducer>;
 
 const createStore = (preloadedState: AppState) =>
   configureStore({
-    reducer: rootReducer,
+    reducer,
     preloadedState,
   });
 
