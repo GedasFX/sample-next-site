@@ -3,10 +3,15 @@ import Carousel from 'src/components/common/Carousel';
 import Testimonials from 'src/components/pages/home/Tesimonials';
 import AboutUs from 'src/components/pages/home/AboutUs';
 import Hero from 'src/components/pages/home/Hero';
+import Head from 'next/head';
 
 export default function HomePage() {
   return (
     <>
+      <Head>
+        <title>Sample Application</title>
+      </Head>
+
       <div className="carousel">
         <Carousel>
           <Image

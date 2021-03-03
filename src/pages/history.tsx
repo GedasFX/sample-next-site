@@ -3,6 +3,7 @@ import { historySelectors, historyThunkActions } from 'src/store/history';
 import { AppState } from 'src/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import Head from 'next/head';
 
 export type HistoryPageProps = {
   history: {
@@ -31,10 +32,16 @@ export default function HistoryPage() {
   }, [dispatch, historyState.lastSyncTimestamp]);
 
   return (
-    <div className="container mx-auto pt-12">
-      <div className="mx-1">
-        <HistoryTable data={history} />
+    <>
+      <Head>
+        <title>History - Sample Application</title>
+      </Head>
+
+      <div className="container mx-auto pt-12">
+        <div className="mx-1">
+          <HistoryTable data={history} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

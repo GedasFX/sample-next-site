@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
 import CartAddItemFrom from 'src/components/pages/cart/CartAddItemForm';
 import CartTable from 'src/components/pages/cart/CartTable';
@@ -23,61 +24,67 @@ export default function CartPage({ products, store }: CartPageProps) {
   const cart = cartSelectors.selectAll(cartState);
 
   return (
-    <div className="container mx-auto pt-5">
-      <div className="mx-4">
-        {/* Market */}
-        <div className="mb-8">
-          <h1 className="text-xl font-bold">Market</h1>
-          <Market
-            items={products}
-            store={store}
-            onItemClick={product => {
-              dispatch(
-                cartActions.add({
-                  id: uuid(),
-                  date_created: new Date().toISOString(),
-                  product,
-                  store: {
-                    name: store.name,
-                    url: store.url || window.location.origin,
-                  },
-                })
-              );
-            }}
-          />
-        </div>
+    <>
+      <Head>
+        <title>Cart - Sample Application</title>
+      </Head>
 
-        {/* Add your own item */}
-        <div className="mb-8">
-          <h1 className="text-xl font-bold">Add your own item!</h1>
-          <div className="my-2">
-            <CartAddItemFrom />
+      <div className="container mx-auto pt-5">
+        <div className="mx-4">
+          {/* Market */}
+          <div className="mb-8">
+            <h1 className="text-xl font-bold">Market</h1>
+            <Market
+              items={products}
+              store={store}
+              onItemClick={product => {
+                dispatch(
+                  cartActions.add({
+                    id: uuid(),
+                    date_created: new Date().toISOString(),
+                    product,
+                    store: {
+                      name: store.name,
+                      url: store.url || window.location.origin,
+                    },
+                  })
+                );
+              }}
+            />
           </div>
-        </div>
 
-        {/* Cart */}
-        <div>
-          <h1 className="text-xl font-bold">Your cart</h1>
-          <div className="my-2">
-            <CartTable data={cart} />
+          {/* Add your own item */}
+          <div className="mb-8">
+            <h1 className="text-xl font-bold">Add your own item!</h1>
+            <div className="my-2">
+              <CartAddItemFrom />
+            </div>
           </div>
-          <button
-            className="text-white text-md bg-indigo-500 disabled:opacity-50 hover:bg-indigo-600 rounded py-2 px-4 float-right"
-            disabled={cart.length === 0}
-            onClick={() => {
-              if (cart.length > 0) {
-                dispatch(historyActions.addMany(cart));
-                dispatch(cartActions.clear());
 
-                window.alert('Item(s) have been sent to history.');
-              }
-            }}
-          >
-            Purchase
-          </button>
+          {/* Cart */}
+          <div>
+            <h1 className="text-xl font-bold">Your cart</h1>
+            <div className="my-2">
+              <CartTable data={cart} />
+            </div>
+            <button
+              className="text-white text-md bg-indigo-500 disabled:opacity-50 hover:bg-indigo-600 rounded py-2 px-4 float-right"
+              disabled={cart.length === 0}
+              onClick={() => {
+                if (cart.length > 0) {
+                  dispatch(historyActions.addMany(cart));
+                  dispatch(cartActions.clear());
+
+                  window.alert('Item(s) have been sent to history.');
+                }
+              }}
+            >
+              Purchase
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
