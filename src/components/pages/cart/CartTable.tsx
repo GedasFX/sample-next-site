@@ -59,6 +59,8 @@ export default function CartTable({ data }: CartTableProps) {
         id: 'edit',
         accessor: c => c.id,
 
+        disableFilters: true,
+
         Cell: function Cell({ value }: { value: string | number }) {
           return <button onClick={() => dispatch(cartActions.remove(value))}>Delete</button>;
         },

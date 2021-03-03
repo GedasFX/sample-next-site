@@ -31,7 +31,7 @@ export default function HistoryPage() {
   }, [dispatch, historyState.lastSyncTimestamp]);
 
   return (
-    <div className="container mx-auto pt-5">
+    <div className="container mx-auto pt-12">
       <HistoryTable data={history} />
     </div>
   );

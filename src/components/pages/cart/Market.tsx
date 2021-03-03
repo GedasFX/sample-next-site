@@ -15,7 +15,7 @@ export default function Market({ items, store, onItemClick }: MarketProps) {
   };
 
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap -mx-2">
       {items.map((item, i) => (
         <div key={i} className="lg:w-1/5 md:w-1/3 sm:w-1/2 w-full p-2">
           <div
