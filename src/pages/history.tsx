@@ -32,7 +32,9 @@ export default function HistoryPage() {
 
   return (
     <div className="container mx-auto pt-12">
-      <HistoryTable data={history} />
+      <div className="mx-1">
+        <HistoryTable data={history} />
+      </div>
     </div>
   );
 }

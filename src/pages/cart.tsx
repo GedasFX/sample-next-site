@@ -24,56 +24,58 @@ export default function CartPage({ products, store }: CartPageProps) {
 
   return (
     <div className="container mx-auto pt-5">
-      {/* Market */}
-      <div className="mx-4 mb-8">
-        <h1 className="text-xl font-bold">Market</h1>
-        <Market
-          items={products}
-          store={store}
-          onItemClick={product => {
-            dispatch(
-              cartActions.add({
-                id: uuid(),
-                date_created: new Date().toISOString(),
-                product,
-                store: {
-                  name: store.name,
-                  url: store.url || window.location.origin,
-                },
-              })
-            );
-          }}
-        />
-      </div>
-
-      {/* Add your own item */}
-      <div className="mx-4 mb-8">
-        <h1 className="text-xl font-bold">Add your own item!</h1>
-        <div className="my-2">
-          <CartAddItemFrom />
-        </div>
-      </div>
-
-      {/* Cart */}
       <div className="mx-4">
-        <h1 className="text-xl font-bold">Your cart</h1>
-        <div className="my-2">
-          <CartTable data={cart} />
+        {/* Market */}
+        <div className="mb-8">
+          <h1 className="text-xl font-bold">Market</h1>
+          <Market
+            items={products}
+            store={store}
+            onItemClick={product => {
+              dispatch(
+                cartActions.add({
+                  id: uuid(),
+                  date_created: new Date().toISOString(),
+                  product,
+                  store: {
+                    name: store.name,
+                    url: store.url || window.location.origin,
+                  },
+                })
+              );
+            }}
+          />
         </div>
-        <button
-          className="text-white text-md bg-indigo-500 disabled:opacity-50 hover:bg-indigo-600 rounded py-2 px-4 float-right"
-          disabled={cart.length === 0}
-          onClick={() => {
-            if (cart.length > 0) {
-              dispatch(historyActions.addMany(cart));
-              dispatch(cartActions.clear());
 
-              window.alert('Item(s) have been sent to history.');
-            }
-          }}
-        >
-          Purchase
-        </button>
+        {/* Add your own item */}
+        <div className="mb-8">
+          <h1 className="text-xl font-bold">Add your own item!</h1>
+          <div className="my-2">
+            <CartAddItemFrom />
+          </div>
+        </div>
+
+        {/* Cart */}
+        <div>
+          <h1 className="text-xl font-bold">Your cart</h1>
+          <div className="my-2">
+            <CartTable data={cart} />
+          </div>
+          <button
+            className="text-white text-md bg-indigo-500 disabled:opacity-50 hover:bg-indigo-600 rounded py-2 px-4 float-right"
+            disabled={cart.length === 0}
+            onClick={() => {
+              if (cart.length > 0) {
+                dispatch(historyActions.addMany(cart));
+                dispatch(cartActions.clear());
+
+                window.alert('Item(s) have been sent to history.');
+              }
+            }}
+          >
+            Purchase
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware, ThunkAction } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { useMemo } from 'react';
 import { Action, combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';

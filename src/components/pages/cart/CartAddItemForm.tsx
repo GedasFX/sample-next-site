@@ -9,7 +9,7 @@ export default function CartAddItemFrom() {
   const dispatch = useDispatch();
 
   const { errors, register, handleSubmit, formState } = useForm<{
-    name: string;
+    product_name: string;
     store_name?: string;
     store_url?: string;
   }>();
@@ -19,7 +19,7 @@ export default function CartAddItemFrom() {
       cartActions.add({
         id: uuid(),
         product: {
-          name: e.name,
+          name: e.product_name,
         },
         store: {
           name: e.store_name || 'Unknown Store',
@@ -36,7 +36,7 @@ export default function CartAddItemFrom() {
         <FormControl
           className="md:w-1/3 w-full text-sm px-2 mb-2"
           label="Product name*"
-          name="name"
+          name="product_name"
           ref={register({
             required: {
               value: true,
@@ -47,7 +47,7 @@ export default function CartAddItemFrom() {
               message: 'Product name is too long. Try to shorten it.',
             },
           })}
-          error={formState.isSubmitted && errors.name?.message}
+          error={formState.isSubmitted && errors.product_name?.message}
         />
         <FormControl
           className="md:w-1/3 w-full text-sm px-2 mb-2"

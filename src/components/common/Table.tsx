@@ -42,43 +42,45 @@ export default function Table({ columns, data }: HistoryTableProps) {
   );
 
   return (
-    <div className="inline-block min-w-full shadow rounded-sm overflow-hidden">
-      <table className="min-w-full leading-normal" {...getTableProps()}>
-        <thead className="border-b border-gray-600">
-          {headerGroups.map(g => (
-            // eslint-disable-next-line react/jsx-key
-            <tr {...g.getHeaderGroupProps()}>
-              {g.headers.map(c => (
-                // eslint-disable-next-line react/jsx-key
-                <th
-                  className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold uppercase tracking-wider"
-                  {...c.getHeaderProps()}
-                >
-                  {c.render('Header')}
-                  {c.canFilter && <div className="mt-2">{c.render('Filter')}</div>}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody className="text-sm" {...getTableBodyProps()}>
-          {rows.map(r => {
-            prepareRow(r);
-
-            return (
+    <div className="overflow-x-auto">
+      <div className="inline-block min-w-full shadow rounded-sm">
+        <table className="min-w-full leading-normal" {...getTableProps()}>
+          <thead className="border-b border-gray-600">
+            {headerGroups.map(g => (
               // eslint-disable-next-line react/jsx-key
-              <tr className="border-b border-gray-200 hover:bg-gray-50" {...r.getRowProps()}>
-                {r.cells.map(c => (
+              <tr {...g.getHeaderGroupProps()}>
+                {g.headers.map(c => (
                   // eslint-disable-next-line react/jsx-key
-                  <td className="px-5 py-1" {...c.getCellProps()}>
-                    {c.render('Cell')}
-                  </td>
+                  <th
+                    className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold uppercase tracking-wider"
+                    {...c.getHeaderProps()}
+                  >
+                    {c.render('Header')}
+                    {c.canFilter && <div className="mt-2">{c.render('Filter')}</div>}
+                  </th>
                 ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+          <tbody className="text-sm" {...getTableBodyProps()}>
+            {rows.map(r => {
+              prepareRow(r);
+
+              return (
+                // eslint-disable-next-line react/jsx-key
+                <tr className="border-b border-gray-200 hover:bg-gray-50" {...r.getRowProps()}>
+                  {r.cells.map(c => (
+                    // eslint-disable-next-line react/jsx-key
+                    <td className="px-5 py-1" {...c.getCellProps()}>
+                      {c.render('Cell')}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
