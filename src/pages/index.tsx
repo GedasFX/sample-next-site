@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Carousel from 'src/components/common/Carousel';
-import Testimonials from 'src/components/home/Tesimonials';
-import AboutUs from 'src/components/home/AboutUs';
-import Hero from 'src/components/home/Hero';
+import Testimonials from 'src/components/pages/home/Tesimonials';
+import AboutUs from 'src/components/pages/home/AboutUs';
+import Hero from 'src/components/pages/home/Hero';
 
 export default function HomePage() {
   return (

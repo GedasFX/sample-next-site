@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Column, Row } from 'react-table';
-import Table from '../common/Table';
+import Table from '../../common/Table';
 
 export type HistoryTableProps = {
   data: Dto.Product[];

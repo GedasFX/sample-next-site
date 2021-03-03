@@ -31,6 +31,7 @@ ENV NODE_ENV=production
 
 # Copy the files required for rendering.
 COPY package.json .
+COPY next.config.runtime.js next.config.js
 COPY --from=build /build/.next ./.next
 COPY --from=build /build/public ./public
 COPY --from=node_modules /build/node_modules ./node_modules

@@ -1,4 +1,4 @@
-import HistoryTable from 'src/components/history/HistoryTable';
+import HistoryTable from 'src/components/pages/history/HistoryTable';
 import { historySelectors, historyThunkActions } from 'src/store/history';
 import { AppState } from 'src/store';
 import { useDispatch, useSelector } from 'react-redux';
