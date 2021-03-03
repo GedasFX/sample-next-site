@@ -1,6 +1,8 @@
-import { configureStore, ThunkAction } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware, ThunkAction } from '@reduxjs/toolkit';
 import { useMemo } from 'react';
 import { Action, combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import cart from './cart';
 import history from './history';
@@ -13,10 +15,21 @@ export const reducer = combineReducers({
 });
 export type AppState = ReturnType<typeof reducer>;
 
+const persistedReducer = persistReducer(
+  {
+    key: 'root',
+    storage,
+    whitelist: ['cart'],
+  },
+  reducer
+);
+
 const createStore = (preloadedState: AppState) =>
   configureStore({
-    reducer,
+    reducer: persistedReducer,
     preloadedState,
+    devTools: process.env.NODE_ENV !== 'production',
+    middleware: m => m({ serializableCheck: false }),
   });
 
 export const initStore = (preloadedState: AppState) => {
